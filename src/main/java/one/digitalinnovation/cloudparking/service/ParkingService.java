@@ -47,6 +47,24 @@ public class ParkingService {
     return parkingCreate;
   }
 
+  public Parking update(String id, Parking parkingUpdate) {
+    Parking parking = findById(id);
+    parking.setLicense(parkingUpdate.getLicense());
+    parking.setState(parkingUpdate.getState());
+    parking.setModel(parkingUpdate.getModel());
+    parking.setColor(parkingUpdate.getColor());
+
+    parkingMap.replace(id, parking);
+
+    return parking;
+  }
+
+  public void delete(String id) {
+    findById(id);
+
+    parkingMap.remove(id);
+  }
+
   private static String getUUID() {
     return UUID.randomUUID().toString().replace("-", "");
   }
