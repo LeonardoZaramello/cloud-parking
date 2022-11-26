@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import one.digitalinnovation.cloudparking.exception.ParkingNotFoundException;
 import one.digitalinnovation.cloudparking.model.Parking;
 
 @Service
@@ -27,12 +28,14 @@ public class ParkingService {
     return parkingMap.values().stream().collect(Collectors.toList());
   }
 
-  private static String getUUID() {
-    return UUID.randomUUID().toString().replace("-", "");
-  }
-
   public Parking findById(String id) {
-    return parkingMap.get(id);
+    Parking parking = parkingMap.get(id);
+
+    if (parking == null) {
+      throw new ParkingNotFoundException(id);
+    }
+
+    return parking;
   }
 
   public Parking create(Parking parkingCreate) {
@@ -42,5 +45,9 @@ public class ParkingService {
     parkingMap.put(UUID, parkingCreate);
 
     return parkingCreate;
+  }
+
+  private static String getUUID() {
+    return UUID.randomUUID().toString().replace("-", "");
   }
 }

@@ -37,6 +37,7 @@ public class ParkingController {
   public ResponseEntity<List<ParkingDTO>> findAll() {
     List<Parking> parkingList = parkingService.findAll();
     List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
+
     return ResponseEntity.ok(result);
   }
 
@@ -45,6 +46,7 @@ public class ParkingController {
   public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
     Parking parking = parkingService.findById(id);
     ParkingDTO result = parkingMapper.toParkingDTO(parking);
+
     return ResponseEntity.ok(result);
   }
 
