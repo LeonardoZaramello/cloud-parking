@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/drones")
+@RequestMapping("/")
 public class hellow {
 
   @GetMapping
   public String getAllEntregas() {
-    return "Ola";
+    return "Ola Mundo";
   }
 }
