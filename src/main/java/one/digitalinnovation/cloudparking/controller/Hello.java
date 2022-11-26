@@ -9,10 +9,10 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/")
 @ApiIgnore
-public class hellow {
+public class Hello {
 
   @GetMapping
-  public String getAllEntregas() {
-    return "Ola Mundo";
+  public String HelloWorld() {
+    return "Bem vindo ao Cloud Parking";
   }
 }

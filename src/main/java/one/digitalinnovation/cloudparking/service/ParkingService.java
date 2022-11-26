@@ -9,22 +9,24 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import one.digitalinnovation.cloudparking.exception.ParkingNotFoundException;
 import one.digitalinnovation.cloudparking.model.Parking;
+import one.digitalinnovation.cloudparking.repository.ParkingRepository;
 
 @Service
 public class ParkingService {
 
-  private static Map<String, Parking> parkingMap = new HashMap<>();
+  private final ParkingRepository parkingRepository;
+
+  public ParkingService(ParkingRepository parkingRepository) {
+    this.parkingRepository = parkingRepository;
+  }
 
   public List<Parking> findAll() {
-    return parkingMap.values().stream().collect(Collectors.toList());
+    return parkingRepository.findAll();
   }
 
   public Parking findById(String id) {
-    Parking parking = parkingMap.get(id);
-
-    if (parking == null) {
-      throw new ParkingNotFoundException(id);
-    }
+    Parking parking =
+        parkingRepository.findById(id).orElseThrow(() -> new ParkingNotFoundException(id));
 
     return parking;
   }
@@ -33,7 +35,7 @@ public class ParkingService {
     String UUID = getUUID();
     parkingCreate.setId(UUID);
     parkingCreate.setEntryDate(LocalDateTime.now());
-    parkingMap.put(UUID, parkingCreate);
+    parkingRepository.save(parkingCreate);
 
     return parkingCreate;
   }
@@ -45,7 +47,7 @@ public class ParkingService {
     parking.setModel(parkingUpdate.getModel());
     parking.setColor(parkingUpdate.getColor());
 
-    parkingMap.replace(id, parking);
+    parkingRepository.save(parking);
 
     return parking;
   }
@@ -53,7 +55,7 @@ public class ParkingService {
   public void delete(String id) {
     findById(id);
 
-    parkingMap.remove(id);
+    parkingRepository.deleteById(id);
   }
 
   private static String getUUID() {
