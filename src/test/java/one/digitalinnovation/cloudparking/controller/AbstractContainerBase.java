@@ -12,5 +12,7 @@ public abstract class AbstractContainerBase {
     System.setProperty("spring.datasource.url", POSTGRE_SQL_CONTAINER.getJdbcUrl());
     System.setProperty("spring.datasource.username", POSTGRE_SQL_CONTAINER.getUsername());
     System.setProperty("spring.datasource.password", POSTGRE_SQL_CONTAINER.getPassword());
+    System.setProperty("spring.datasource.driver-class-name",
+        POSTGRE_SQL_CONTAINER.getDriverClassName());
   }
 }
